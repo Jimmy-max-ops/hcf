@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.world.Difficulty;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.world.Heightmap;
@@ -51,7 +53,8 @@ public class ModEntities {
             FabricEntityTypeBuilder.<ChuchuEntity>createMob()
                     .spawnGroup(SpawnGroup.MONSTER)
                     .entityFactory(ChuchuEntity::new)
-                    .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HostileEntity::canSpawnInDark)
+                    .spawnRestriction(SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                            (t, w, r, pos, rand) -> w.getDifficulty() != Difficulty.PEACEFUL && MobEntity.canMobSpawn(t, w, r, pos, rand))
                     .dimensions(EntityDimensions.fixed(2.04f, 2.04f))
                     .trackRangeBlocks(10)
                     .defaultAttributes(ChuchuEntity::createAttributes)
